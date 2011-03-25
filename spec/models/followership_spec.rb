@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe Followership do
-  let!(:user) { User.new }
-  let!(:tweet) { Tweet.new }
+  let!(:user) { User.create! :username => "aa", :password => "aa", :email => "aa@aa.com" }
+  let!(:tweet) { Tweet.create! :user => user, :message => "test" }
 
   its "follower should always be set" do
     followership = Followership.new :follower => nil
@@ -35,11 +35,28 @@ describe Followership do
     followership.should_not be_valid
   end
 
-  it "duplicates should not be allowed" do
-    another_user = User.new
-    Followership.create! :follower => user, :following => another_user
+  context "duplicates" do
+    let!(:another_user) { User.new :username => "bb", :password => "bb", :email => "bb@bb.com" }
+    let!(:different_user) { User.new :username => "cc", :password => "cc", :email => "cc@cc.com" }
 
-    followership = Followership.new :follower => user, :following => another_user
-    followership.should_not be_valid
+    before :all do
+      Followership.create! :follower => user, :following => another_user
+    end
+
+    it "should not allow duplicates" do
+      followership = Followership.new :follower => user, :following => another_user
+      followership.should_not be_valid
+    end
+
+    it "should allow multiple followers per user" do
+      followership = Followership.new :follower => different_user, :following => another_user
+      followership.should be_valid
+      
+    end
+
+    it "should allow multiple followings per user" do
+      followership = Followership.new :follower => user, :following => different_user
+      followership.should be_valid
+    end
   end
 end

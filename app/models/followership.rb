@@ -5,7 +5,7 @@ class Followership < ActiveRecord::Base
   validates_presence_of :follower
   validates_presence_of :following
 
-  validates_uniqueness_of :follower_id, :following_id
+  validates_uniqueness_of :following_id, :scope => :follower_id
 
   validate do |record|
     errors.add :base, "Follower and following are the same user" if 
