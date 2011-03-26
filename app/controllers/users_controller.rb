@@ -5,7 +5,8 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find params[:id]
-
+p Tweet.all
+p @user.tweets(true)
     @tweets = current_user == @user ? @user.wall : @user.tweets
   end
 

@@ -48,6 +48,7 @@ describe UsersController do
 
     it "should show user tweets for other users" do
       session[:user] = current
+      p "now"
       get :show, :id => follower
 
       assigns(:tweets).should == [follower_tweet]
@@ -95,7 +96,7 @@ describe UsersController do
       post :create, :user => { :username => "another_user" }
 
       User.find_by_username("another_user").should be_nil 
-      
+
       response.should render_template "home/index"
     end
   end
