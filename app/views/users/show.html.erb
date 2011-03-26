@@ -22,20 +22,20 @@
 <div class="block" id="block-lists">
           
   <div class="content">
-    <h2 class="title"><%= @user.username %>'s Tweets</h2>
+    <h2 class="title"><%= "SOME USER" %>'s Tweets</h2>
     <div class="inner">
       <ul class="list">
         <% @tweets.each do |tweet| %>
         <li>
           <div class="left">
-            <%= link_to image_tag(gravatar_url(tweet.user.email), :class => "avatar"), tweet.user %>
+            <%= link_to image_tag(gravatar_url("SOME EMAIL"), :class => "avatar"), tweet.user %>
           </div>
           <div class="item">
             <p>
               <%= link_to tweet.user.username, tweet.user %>
-              <span class="small"><%= time_ago_in_words tweet.created_at %> ago:</span>
+              <span class="small"><%= time_ago_in_words 100.years.ago %> ago:</span>
               <br />
-              <%= tweet.message %>
+              <%= "THIS SHOULD BE A REAL MESSAGE" %>
             </p>
           </div>
         </li>

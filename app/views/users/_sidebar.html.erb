@@ -1,13 +1,13 @@
 <div class="block">
   <div class="sidebar-block">
     <h4>About <%= user.username %></h4>
-    <%= image_tag gravatar_url(user.email) %>
+    <%= image_tag gravatar_url("USERS EMAIL") %>
     <p><%= user.bio %></p>
 
     <% if current_user != user %>
       <div class="actions wat-cf">
       <%= 
-        if user.followers.include? current_user
+        unless user.followers.include? current_user
           link_to image_tag("web-app-theme/icons/tick.png") + " Unfollow", unfollow_user_path(user), :method => :put, :class => "button"
         else
           link_to image_tag("web-app-theme/icons/tick.png") + " Follow", follow_user_path(user), :method => :put, :class => "button"
