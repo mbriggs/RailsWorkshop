@@ -23,7 +23,6 @@ describe User do
     let!(:tweeter) { User.create! :username => "a", :password => "a", :email => "a@a.com" }
     let!(:follower) { User.create! :username => "b", :password => "b", :email => "b@b.com" }
     let!(:following) { User.create! :username => "c", :password => "c", :email => "c@c.com" }
-    let!(:loner) { User.create! :username => "d", :password => "d", :email => "d@d.com" }
 
 
     before :all do
@@ -36,19 +35,20 @@ describe User do
 
     its("followers") { should eql [follower] }
     its("followings") { should eql [following] }
-=begin
-    it "should follow user" do
-      subject.followings.should_not include loner
-      subject.follow!(loner)
-      subject.followings.should include loner
+
+    it "should follow and unfollow user" do
+      user_1 = User.create! :username => "aa", :password => "aa", :email => "aa@aa.com"
+      user_2 = User.create! :username => "bb", :password => "bb", :email => "bb@bb.com"
+      
+      user_1.follow! user_2
+      user_1.followings.should include user_2
+      user_2.followers.should include user_1
+
+      user_1.unfollow! user_2
+      user_1.followings.should_not include user_2
+      user_2.followings.should_not include user_1
     end
 
-    it "should unfollow user" do
-      subject.followings.should include following
-      subject.unfollow!(following)
-      subject.followings.should_not include following
-    end
-=end
     context "messaging" do
       let!(:tweet_1) { Tweet.create! :user => tweeter, :message => "tweet" }
       let!(:tweet_2) { Tweet.create! :user => tweeter, :message => "tweet" }

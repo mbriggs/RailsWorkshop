@@ -30,4 +30,5 @@ group :development, :test do
   gem "rspec-rails", ">= 2.5"
   gem "capybara"
   gem "web-app-theme"
+  gem "database_cleaner"
 end
