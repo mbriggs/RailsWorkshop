@@ -5,7 +5,12 @@ RailsWorkshop::Application.routes.draw do
 
   resources :tweets
 
-  resources :users
+  resources :users do
+    member do
+      put :follow
+      put :unfollow
+    end
+  end
 
   root :to => "home#index"
 
