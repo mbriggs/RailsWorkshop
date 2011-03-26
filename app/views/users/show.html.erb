@@ -1,39 +1,49 @@
+<% if current_user == @user %>
 <div class="block">
-  <div class="secondary-navigation">
-    <ul class="wat-cf">
-      <li class="first"><%= link_to "#{t("web-app-theme.list", :default => "List")}", users_path  %></li>
-      <li><%= link_to "#{t("web-app-theme.new", :default => "New")}", new_user_path %></li>
-      <li class="active"><%= link_to "#{t("web-app-theme.show", :default => "Show")}", user_path %></li>
-    </ul>
-  </div>          
-  <div class="content">
+  <div class="content">            
+    <h2 class="title">New Tweet</h2>
     <div class="inner">
-      
-        <p>
-          <b><%= t("activerecord.attributes.user.username", :default => t("activerecord.labels.username", :default => "Username")) %>:</b>
-          <%= @user.username %>
-        </p>
+      <%= form_for :tweet, :url => tweets_path, :html => { :class => :form } do |f| -%>
+          <div class="group">
+            <%= f.text_area :message, :class => 'text_area' %>
+          </div>
+                
+        <div class="actions wat-cf">
+          <button class="button" type="submit">
+            <%= image_tag("web-app-theme/icons/tick.png", :alt => "Tweet") %> Tweet
+          </button>
+        </div>
+      <% end -%>
+    </div>
+  </div>
+</div>
+<% end %>
 
-        <p>
-          <b><%= t("activerecord.attributes.user.password", :default => t("activerecord.labels.password", :default => "Password")) %>:</b>
-          <%= @user.password %>
-        </p>
-
-        <p>
-          <b><%= t("activerecord.attributes.user.email", :default => t("activerecord.labels.email", :default => "Email")) %>:</b>
-          <%= @user.email %>
-        </p>
-
-        <p>
-          <b><%= t("activerecord.attributes.user.bio", :default => t("activerecord.labels.bio", :default => "Bio")) %>:</b>
-          <%= @user.bio %>
-        </p>
-      <div class="wat-cf">
-        <%= link_to image_tag("web-app-theme/icons/application_edit.png", :alt => "#{t("web-app-theme.edit", :default=> "Edit")}") + " " + t("web-app-theme.edit", :default=> "Edit"), edit_user_path(@user), :class => "button" %> 
-        <%= link_to image_tag("web-app-theme/icons/cross.png", :alt => "#{t("web-app-theme.delete", :default=> "Delete")}") + " " + t("web-app-theme.delete", :default => "Delete"), user_path(@user), :method => "delete", :class => "button", :confirm => "#{t("web-app-theme.confirm", :default => "Are you sure?")}" %>
-      </div>      
+<div class="block" id="block-lists">
+          
+  <div class="content">
+    <h2 class="title"><%= @user.username %>'s Tweets</h2>
+    <div class="inner">
+      <ul class="list">
+        <% @tweets.each do |tweet| %>
+        <li>
+          <div class="left">
+            <%= link_to image_tag(gravatar_url(tweet.user.email), :class => "avatar"), tweet.user %>
+          </div>
+          <div class="item">
+            <p>
+              <%= link_to tweet.user.username, tweet.user %>
+              <span class="small"><%= time_ago_in_words tweet.created_at %> ago:</span>
+              <br />
+              <%= tweet.message %>
+            </p>
+          </div>
+        </li>
+        <% end -%>
+      </ul>
+      <br />
     </div>
   </div>
 </div>
 
-<% content_for :sidebar, render(:partial => 'sidebar') -%>
+<% content_for :sidebar, render(:partial => 'sidebar', :locals => {:user => @user}) -%>

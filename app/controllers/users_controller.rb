@@ -5,6 +5,8 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find params[:id]
+
+    @tweets = current_user == @user ? @user.wall : @user.tweets
   end
 
   def create

@@ -21,12 +21,36 @@ describe UsersController do
   end
 
   describe "GET 'show'" do
+    let!(:current) { User.create! :username => "current", :password => "pass", :email => "current@example.com" }
+    let!(:follower) { User.create! :username => "follower", :password => "pass", :email => "follower@example.com" }
+    let!(:current_tweet) { current.tweets.create! :message => "hello" }
+    let!(:follower_tweet) { follower.tweets.create! :message => "hi" }
+
+    before :all do
+      Followership.create! :follower => follower, :following => current
+      [follower_tweet, current_tweet]
+    end
+
     it "should assign specified user" do
       get :show, :id => user_1.id
 
       response.should be_successful
       response.should render_template "show"
       assigns(:user).should == user_1
+    end
+
+    it "should show wall tweets for current user" do
+      session[:user] = current
+      get :show, :id => current
+
+      assigns(:tweets).should == [current_tweet, follower_tweet]
+    end
+
+    it "should show user tweets for other users" do
+      session[:user] = current
+      get :show, :id => follower
+
+      assigns(:tweets).should == [follower_tweet]
     end
   end
 

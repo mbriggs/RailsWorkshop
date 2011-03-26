@@ -1,13 +1,39 @@
-<div class="block notice">
-  <h3>Simple Block</h3>
-  <div class="content">
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+<div class="block">
+  <div class="sidebar-block">
+    <h4>About <%= user.username %></h4>
+    <%= image_tag gravatar_url(user.email) %>
+    <p><%= user.bio %></p>
+
+    <% if current_user != user %>
+      <div class="actions wat-cf">
+      <%= 
+        if user.followers.include? current_user
+          link_to image_tag("web-app-theme/icons/tick.png") + "Unfollow", unfollow_user_path(user), :method => :put, :class => "button"
+        else
+          link_to image_tag("web-app-theme/icons/tick.png") + " Follow", follow_user_path(user), :method => :put, :class => "button"
+        end
+      %>
+      </div>
+    <% end %>
   </div>
 </div>
+
+
 <div class="block">
-  <h3>Links</h3>
+  <h3>Followers</h3>
   <ul class="navigation">
-    <li><a href="#">Link 1</a></li>
-    <li><a href="#">Link 2</a></li>
+    <% user.followers.each do |follower| %>
+      <li><%= link_to follower.username, follower %></li>
+    <% end %>
   </ul>
 </div>
+
+<div class="block">
+  <h3>Following</h3>
+  <ul class="navigation">
+    <% user.followings.each do |following| %>
+      <li><%= link_to following.username, following %></li>
+    <% end %>
+  </ul>
+</div>
+

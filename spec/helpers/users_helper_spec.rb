@@ -11,5 +11,23 @@ require 'spec_helper'
 #   end
 # end
 describe UsersHelper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "gravatar_url" do
+    it "should generate gravatar url" do
+      email = "Test@Example.Com"
+      md5 = Digest::MD5::hexdigest email.downcase
+      url = "http://www.gravatar.com/avatar.php?gravatar_id=#{md5}"
+
+      gravatar_url(email).should == url
+      gravatar_url(email.upcase).should == url
+      gravatar_url(email.downcase).should == url
+    end
+  end
+
+  describe "current_user" do
+    it "should return current user" do
+      user = User.create! :username => "user", :password => "pass", :email => "user@example.com"
+      session[:user] = user
+      current_user.should == user
+    end
+  end
 end
