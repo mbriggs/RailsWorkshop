@@ -27,10 +27,12 @@ a img { border: none; }
 body {
   font-size: 12px;
   font-family: sans-serif;  
+  min-height: 100%;
 }
 
 #container {
   min-width: 960px;
+  min-min-height: 100%;
 }
 
 #header, #wrapper {
@@ -55,6 +57,7 @@ body {
 #main {  
   width: 70%;
   float: left;    
+  min-height: 100%;
 }
 
 .actions-bar {
@@ -102,6 +105,7 @@ body {
 
 #wrapper {
   padding-top: 20px;
+  min-height: 100%;
 }
 
 #main .block {
@@ -289,6 +293,18 @@ input.checkbox {
 .form .fieldWithErrors .error {
   color: red;
 }
+
+.errors {
+  padding: 20px;
+  color: red;
+  margin: auto;
+}
+
+.errors ul {
+  margin-left: 20px;
+  list-style: square;
+}
+  
 
 .form input.text_field, .form textarea.text_area {
   width: 100%;

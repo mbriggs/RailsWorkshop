@@ -16,7 +16,7 @@ class UsersController < ApplicationController
       session[:user] = @user
       redirect_to @user
     else
-      render "home/index"
+      render "home/index", :layout => 'home'
     end
   end
 

@@ -12,7 +12,7 @@
       </div>
       <% end -%>
     </div>
-    <% form_tag({:action => :login}, :class => 'form login') do -%>
+    <% form_tag({:action => :login, :controller => 'home'}, :class => 'form login') do -%>
       <div class="group wat-cf">
         <div class="left">
           <label class="label right">Username</label>
@@ -51,7 +51,19 @@
       </div>
       <% end -%>
     </div>
-    <% form_for :user, :url => users_path, :html => { :class => 'form' } do |f| -%>
+
+    <div class='errors'>
+    <% unless @user.errors.empty? %>
+      Oops! It seems like you missed a few things...
+      <ul>
+      <% @user.errors.full_messages.each do |e| %>
+        <li><%= e %></li>
+      <% end -%>
+      </ul>
+    <% end -%>
+    </div>
+
+    <% form_for @user, :html => { :class => 'form' } do |f| -%>
       <div class="group wat-cf">
         <div class="left">
           <label class="label right">Username</label>
