@@ -7,20 +7,18 @@ class User < ActiveRecord::Base
 
   has_many :tweets, :order => "created_at DESC"
 
-  validates_presence_of :username, :password, :email
-  validates_uniqueness_of :username, :email
+  # TODO Add validations
 
   def wall
-    Tweet.
-      where( :user_id => [self] + followings ).
-      order( "created_at DESC" )
+    # FIXME Get user's and follower's tweets
+    Tweet.all
   end
 
   def follow! user
-    followings.push user
+    # FIXME Follow a user
   end
 
   def unfollow! user
-    followings.delete user
+    # FIXME Unfollow a user
   end
 end

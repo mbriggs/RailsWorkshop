@@ -1,18 +1,21 @@
 class UsersController < ApplicationController
   def index
-    @users = User.order("username ASC")
+    # FIXME Order by date
+    @users = User.all
   end
 
   def show
     @user = User.find params[:id]
 
-    @tweets = current_user == @user ? @user.wall : @user.tweets
+    # FIXME Show the right tweets
+    @tweets = Tweet.all
   end
 
   def create
     @user = User.new params[:user]
 
-    if @user.save
+    # FIXME Save the user
+    if true
       session[:user] = @user
       redirect_to @user
     else
@@ -23,7 +26,7 @@ class UsersController < ApplicationController
   def follow
     @user = User.find params[:id]
 
-    current_user.follow! @user
+    # FIXME Follow the user!
 
     redirect_to @user
   end
@@ -31,7 +34,7 @@ class UsersController < ApplicationController
   def unfollow
     @user = User.find params[:id]
 
-    current_user.unfollow! @user
+    # FIXME Follow the user!
 
     redirect_to @user
   end

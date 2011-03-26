@@ -1,7 +1,8 @@
 class HomeController < ApplicationController
   def index
     @user = User.new
-    redirect_to user_path(current_user) if current_user
+
+    # FIXME Redirect them to their home page if they are logged in
   end
 
   def login

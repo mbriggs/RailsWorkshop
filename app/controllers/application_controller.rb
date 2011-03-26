@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   private
 
   def current_user
-    @current_user ||= session[:user]
+    # FIXME get the user from the session
+    @current_user ||= nil
   end
 end
