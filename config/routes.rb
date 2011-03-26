@@ -1,9 +1,13 @@
 RailsWorkshop::Application.routes.draw do
   get "home/index"
+  post "home/login"
+  get "home/logout"
 
   resources :tweets
 
   resources :users
+
+  root :to => "home#index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
