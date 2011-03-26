@@ -22,13 +22,13 @@ describe UsersController do
 
   describe "GET 'show'" do
     let!(:current) { User.create! :username => "current", :password => "pass", :email => "current@example.com" }
-    let!(:follower) { User.create! :username => "follower", :password => "pass", :email => "follower@example.com" }
+    let!(:following) { User.create! :username => "follower", :password => "pass", :email => "follower@example.com" }
     let!(:current_tweet) { current.tweets.create! :message => "hello" }
-    let!(:follower_tweet) { follower.tweets.create! :message => "hi" }
+    let!(:following_tweet) { following.tweets.create! :message => "hi" }
 
     before :all do
-      Followership.create! :follower => follower, :following => current
-      [follower_tweet, current_tweet]
+      [following_tweet, current_tweet]
+      Followership.create! :follower => current, :following => following
     end
 
     it "should assign specified user" do
@@ -43,15 +43,14 @@ describe UsersController do
       session[:user] = current
       get :show, :id => current
 
-      assigns(:tweets).should == [current_tweet, follower_tweet]
+      assigns(:tweets).should == [current_tweet, following_tweet]
     end
 
     it "should show user tweets for other users" do
       session[:user] = current
-      p "now"
-      get :show, :id => follower
+      get :show, :id => following
 
-      assigns(:tweets).should == [follower_tweet]
+      assigns(:tweets).should == [following_tweet]
     end
   end
 
