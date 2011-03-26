@@ -50,4 +50,29 @@ describe UsersController do
       response.should redirect_to user_path(user_3)
     end
   end
+
+  describe "POST 'create'" do
+    it "should create user with valid parameters" do
+      User.find_by_username("new_user").should be_nil
+
+      post :create, :user => { :username => "new_user", :password => "pass", :email => "new_user@example.com" }
+
+      user = User.find_by_username("new_user")
+
+      user.should_not be_nil
+
+      session[:user].should == user
+      response.should redirect_to user_path(user)
+    end
+
+    it "should not create user without valid parameters" do
+      User.find_by_username("another_user").should be_nil
+
+      post :create, :user => { :username => "another_user" }
+
+      User.find_by_username("another_user").should be_nil 
+      
+      response.should render_template "home/index"
+    end
+  end
 end

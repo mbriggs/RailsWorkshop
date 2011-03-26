@@ -1,2 +1,100 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<h1>Web Startup Society's Twitter Clone</h1>
+
+<br />
+
+<div class="block" id="block-login">
+  <h2>Login</h2>
+  <div class="content login">
+    <div class="flash">
+      <% flash.each do |type, message| -%>
+      <div class="message <%= type %>">
+        <p><%=  message %></p>
+      </div>
+      <% end -%>
+    </div>
+    <% form_tag({:action => :login}, :class => 'form login') do -%>
+      <div class="group wat-cf">
+        <div class="left">
+          <label class="label right">Username</label>
+        </div>
+        <div class="right">
+          <%= text_field_tag :username, nil, :class => 'text_field' %>
+        </div>
+      </div>
+      <div class="group wat-cf">
+        <div class="left">
+          <label class="label right">Password</label>
+        </div>
+        <div class="right">
+          <%= password_field_tag :password, nil, :class => 'text_field' %>
+        </div>
+      </div>
+      <div class="group navform wat-cf">
+        <div class="right">
+          <button class="button" type="submit">
+            <%= image_tag("web-app-theme/icons/key.png", :alt => "Login") %> 
+            Login
+          </button>
+        </div>
+      </div>
+    <% end -%>
+  </div>
+</div>
+
+<div class="block" id="block-signup">
+  <h2>Register</h2>
+  <div class="content">
+    <div class="flash">
+      <% flash.each do |type, message| -%>
+      <div class="message <%= type %>">
+        <p><%=  message %></p>
+      </div>
+      <% end -%>
+    </div>
+    <% form_for :user, :url => users_path, :html => { :class => 'form' } do |f| -%>
+      <div class="group wat-cf">
+        <div class="left">
+          <label class="label right">Username</label>
+        </div>
+        <div class="right">
+          <%= f.text_field :username, :class => 'text_field' %>
+        </div>              
+      </div>
+      <div class="group wat-cf">
+        <div class="left">
+          <label class="label right">Email</label>                
+        </div>
+        <div class="right">
+          <%= f.text_field :email, :class => 'text_field' %>
+        </div>              
+      </div>
+      <div class="group wat-cf">
+        <div class="left">
+          <label class="label right">Password</label>
+        </div>
+        <div class="right">
+          <%= f.password_field :password, :class => 'text_field' %>
+        </div>              
+      </div>
+
+      <div class="group wat-cf">
+        <div class="left">
+          <label class="label right">Bio</label>
+        </div>
+        <div class="right">
+          <%= f.text_area :bio, :class => 'text_area' %>
+        </div>              
+      </div>
+      
+      <div class="group navform wat-cf">
+        <div class="right">
+          <button class="button" type="submit">
+            <%= image_tag("web-app-theme/icons/tick.png", :alt => "Register") %> 
+            Register
+          </button>
+        </div>
+      </div>
+    <% end -%>
+  </div>
+</div>
+

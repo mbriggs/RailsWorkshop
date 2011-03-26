@@ -7,6 +7,17 @@ class UsersController < ApplicationController
     @user = User.find params[:id]
   end
 
+  def create
+    @user = User.new params[:user]
+
+    if @user.save
+      session[:user] = @user
+      redirect_to @user
+    else
+      render "home/index"
+    end
+  end
+
   def follow
     @user = User.find params[:id]
 
